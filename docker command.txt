@@ -1,0 +1,35 @@
+
+
+docker images -a #list all local image available
+
+docker stack deploy --compose-file [file_name] [stack_name] #deploy a complet stack
+
+docker network ls #list the network on the container
+docker network rm [network_name] #remove the network from the container
+docker network inspect [network_name] #get all information on a specified network interface
+
+
+docker stack rm [stack_name] #remove all the stack
+docker stack ls #print the up stacks
+docker stack ps [stack_name] #give the status of the services
+
+docker ps or docker container ls #show all running container
+docker ps -a #To show all containers
+
+docker service ps [service_name]--no-trunc #to list services and not truncate error cause
+
+docker service scale [name]=[nbr] #scale the service up to the defined number
+docker service update --replicas = [nbr] [service_name]
+
+
+docker inspect --format=''  [CONTAINER_name] | python -m json.tool #inspect a container information 
+
+docker attach [CONTAINER_name] #Attach local standard input, output, and error streams to a running container
+
+
+
+make a network (valider qu'il est dispo dans les autres machine du cluster)
+
+docker network create --attachable --scope swarm -d bridge zookeeper_ZookeeperNetwork
+
+then launch the 2 stack zookeeper firsta nd then kafka 

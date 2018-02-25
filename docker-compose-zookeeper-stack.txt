@@ -3,6 +3,7 @@ services:
   zookeeper1:
     image: zookeeper:latest
     deploy:
+	  mode: global
       placement:
         constraints: [node.role == manager]
       restart_policy:
@@ -14,7 +15,7 @@ services:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zookeeper2:2888:3888 server.3=zookeeper3:2888:3888
     networks:
-      - ZookeeperNetwork
+      - zookeeper_ZookeeperNetwork
   zookeeper2:
     image: zookeeper:latest
     deploy:
@@ -29,7 +30,7 @@ services:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zookeeper1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zookeeper3:2888:3888
     networks:
-      - ZookeeperNetwork
+      - zookeeper_ZookeeperNetwork
   zookeeper3:
     image: zookeeper:latest
     deploy:
@@ -44,7 +45,7 @@ services:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zookeeper1:2888:3888 server.2=zookeeper2:2888:3888 server.3=0.0.0.0:2888:3888
     networks:
-      - ZookeeperNetwork
+      - zookeeper_ZookeeperNetwork
   visualizer:
     image: dockersamples/visualizer:stable
     ports:
@@ -58,6 +59,6 @@ services:
       - visualizernet
 #this to expose the network to other stack
 networks:
-  ZookeeperNetwork:
-   driver: bridge 
+  zookeeper_ZookeeperNetwork:
+   external: true
   visualizernet:
