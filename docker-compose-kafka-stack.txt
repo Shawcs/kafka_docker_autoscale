@@ -3,11 +3,12 @@ services:
   kafka:
     image: wurstmeister/kafka:latest
     deploy:
-	 mode: global
-     placement:
-      constraints: [node.role != manager]
-     restart_policy:
+      placement:
+        constraints: [node.role != manager]
+    restart_policy:
         condition: on-failure
+        delay: 5s
+        max_attempts: 3
     depends_on:
       - zookeeper1
       - zookeeper2
