@@ -3,11 +3,12 @@ services:
   zookeeper1:
     image: zookeeper:latest
     deploy:
-	  mode: global
       placement:
         constraints: [node.role == manager]
-      restart_policy:
+    restart_policy:
         condition: on-failure
+        delay: 5s
+        max_attempts: 3
     hostname: zookeeper1
     ports:
       - 2181:2181
@@ -59,6 +60,10 @@ services:
       - visualizernet
 #this to expose the network to other stack
 networks:
-  zookeeper_ZookeeperNetwork:
-   external: true
+  ZookeeperNetwork:
+   attachable: true
+   driver: overlay
+  KafkaNetwork:
+   attachable: true
   visualizernet:
+   attachable: true
